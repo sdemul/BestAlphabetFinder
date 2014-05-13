@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * @author Sjaak de Mul
+ *
+ */
 public class BestAlphabetFinder {
 
 	private static final int MAX_NUMBER_OF_EVALUATION_LEVELS = 1;
