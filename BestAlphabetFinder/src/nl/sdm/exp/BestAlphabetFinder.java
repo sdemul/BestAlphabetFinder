@@ -17,6 +17,7 @@ import java.util.Random;
  */
 public class BestAlphabetFinder {
 
+	private static final int NUMBER_OF_STARTING_ALPHABETS = 30;
 	private static final int MAX_NUMBER_OF_EVALUATION_LEVELS = 1;
 
 	private String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -45,7 +46,8 @@ public class BestAlphabetFinder {
 			
 			System.out.println("Number of 'ascending' words: " + this.countAscendingWords(this.alphabet, this.words));
 			
-			this.determineBestAlphabet(this.alphabet);
+			String bestAlphabet = this.determineBestAlphabet(this.alphabet);
+			printScore("Best alphabet over all starting positions: ", bestAlphabet, this.countAscendingWords(bestAlphabet, this.words));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -56,10 +58,10 @@ public class BestAlphabetFinder {
 	private String determineBestAlphabet(String alphabet) {
 		
 		printScore("Base alphabet: ", alphabet, this.countAscendingWords(alphabet, this.words));
-		System.out.println("30 tries:");
+		System.out.println(NUMBER_OF_STARTING_ALPHABETS + " tries:");
 		String bestAlphabet = alphabet;
 		long bestScore = 0;
-		List<String> shuffledAlphabets = this.generateShuffledAlphabets(alphabet, 30);
+		List<String> shuffledAlphabets = this.generateShuffledAlphabets(alphabet, NUMBER_OF_STARTING_ALPHABETS);
 
 		for (String startingAlphabet : shuffledAlphabets) {
 			Map<String,Long> abcScores = new HashMap<>();
@@ -89,8 +91,6 @@ public class BestAlphabetFinder {
 			}
 
 		}
-		printScore("Best alphabet over all starting positions: ", bestAlphabet, this.countAscendingWords(bestAlphabet, this.words));
-				
 		return bestAlphabet;
 	}
 	
@@ -164,7 +164,7 @@ public class BestAlphabetFinder {
 			long score = this.countAscendingWords(alphabet, this.words);
 			return Math.max(score, this.score(this.bestModification(alphabet, toBeIgnored, level), toBeIgnored, level));
 		} else {
-			return this.countAscendingWords(alphabet, this.words); // * 10000  + this.scoreOccurences(alphabet);
+			return this.countAscendingWords(alphabet, this.words); 
 		}
 
 	}
@@ -175,7 +175,7 @@ public class BestAlphabetFinder {
 
 	}
 
-	private boolean isAscendingWord(String alphabet, String word) { //  String alphabet
+	private boolean isAscendingWord(String alphabet, String word) { 
 		
 		int currentIndex = -1;
 		int newIndex;
